@@ -1,0 +1,93 @@
+services:
+    laravel.test:
+        build:
+            context: ./vendor/laravel/sail/runtimes/8.0
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: sail-8.0/app
+        ports:
+            - '${APP_PORT:-80}:80'
+        environment:
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - sail
+        depends_on:
+            - mysql
+            - selenium
+    mysql:
+        image: 'mysql:8.0'
+        ports:
+            - '${FORWARD_DB_PORT:-3306}:3306'
+            - '6033:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        expose:
+            - '3306'
+        volumes:
+            - 'sailmysql:/var/lib/testrail_mysql'
+        networks:
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - mysqladmin
+                - ping
+                - '-p${DB_PASSWORD}'
+            retries: 3
+            timeout: 5s
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - 'mysql:mysql'
+        ports:
+            - '8080:80'
+        environment:
+            MYSQL_USERNAME: '${DB_USERNAME}'
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            PMA_HOST: mysql
+        networks:
+            - sail
+    mongo:
+        image: 'mongo:6.0'
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: '${MDB_USERNAME}'
+            MONGO_INITDB_ROOT_PASSWORD: '${MDB_PASSWORD}'
+            MONGO_INITDB_DATABASE: '${MDB_DATABASE}'
+        volumes:
+            - 'sailmongo:/data/mdb'
+        networks:
+            - sail
+    mailhog:
+        image: 'mailhog/mailhog:latest'
+        ports:
+            - '1025:1025'
+            - '8025:8025'
+        networks:
+            - sail
+    selenium:
+        image: selenium/standalone-chrome
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        volumes:
+            - '/dev/shm:/dev/shm'
+        networks:
+            - sail
+networks:
+    sail:
+        driver: bridge
+volumes:
+    sailmysql:
+        driver: local
+    sailmongo:
+        driver: local
+    sail-mysql:
+        driver: local

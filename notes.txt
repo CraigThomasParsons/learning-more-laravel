@@ -1,0 +1,23 @@
+Thursday August 14th 2025 - 2025-08-14 15:44:26
+---------------------------------------------
+I think I'm going to scratch all previous plans.
+I will decide once I get there but I can just follow
+the livewire course and do everything in here.
+
+These days I'm spawning way too many repositories
+that are just not being completed.
+
+
+Tuesday August 5th 2025 - 2025-08-05 12:29:24
+---------------------------------------------
+You created a repository for doing everything here:
+ git@github.com:craigpars0061/laravel5.3.git
+ https://www.kobo.com/ca/en/ebook/laravel-application-development-cookbook
+
+You also wanted to log everything you are doing here.
+
+You will create another repository and call it laravel-livewire.
+Add this in the description.
+
+Build a realtime chat-message application for your Laravel website
+(beginner to Advanced) with step by step

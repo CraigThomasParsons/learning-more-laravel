@@ -1,0 +1,17 @@
+Monday July 21st 2025 - 2025-07-21 12:17:28
+---------------------------------------------
+Used this article to try to install mongodb
+https://dev.to/rafaelogic/setup-mongodb-in-laravel-sail-34pm
+
+I was trying to do this because nothing seems to work:
+https://medium.com/@suton.tamimy/install-an-older-version-of-laravel-with-sail-6e073bfada4a
+
+Usually I really enjoy using docker-compose but the laravel image doesn't want to work.
+
+Before Monday July 21st 2025 - 2025-07-21 12:17:28
+---------------------------------------------
+Staring this app as a local dev environment:
+
+./vendor/bin/sail up
+
+./vendor/bin/sail artisan migrate:install && ./vendor/bin/sail artisan migrate:fresh
